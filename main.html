@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한항공 캐릭터 | Korean Air Characters</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+
+<script>
+var IMAGES = {
+  /* ── 맨 상단 풀스크린 슬라이더 (별도 이미지) ── */
+  fs1: 'fs1.png',
+  fs2: 'fs2.png',
+  fs3: 'fs3.png',
+  fs4: 'fs4.png',
+
+  /* ── 메인 단체 이미지 ── */
+  main: 'main.png',
+
+  /* ── 캐릭터 스탠딩 ── */
+  char1: 'char1.png',
+  char2: 'char2.png',
+  char3: 'char3.png',
+  char4: 'char4.png',
+
+  /* ── 갤러리 슬라이더 (캐릭터 아래) ── */
+  gallery1: 'gallery1.jpg',
+  gallery2: 'gallery2.jpg',
+  gallery3: 'gallery3.jpg',
+  gallery4: 'gallery4.jpg',
+
+  /* ── 챗봇 적용안 갤러리 (핸드폰 비율) ── */
+  chatbot1: 'chatbot1.png',
+  chatbot2: 'chatbot2.png',
+  chatbot3: 'chatbot3.png',
+  chatbot4: 'chatbot4.png',
+  chatbot5: 'chatbot5.png',
+  chatbot6: 'chatbot6.png',
+};
+</script>
+
+<style>
+/* ═══════ RESET & BASE ═══════ */
+:root {
+  --sky:#5CC8F2; --navy:#071B8C; --deep:#051A59;
+  --sky2:#9BDAF2; --w:#fff;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--deep);
+  color:var(--w);
+  font-family:'Pretendard Variable',Pretendard,sans-serif;
+  overflow-x:hidden;
+}
+::selection{background:var(--sky);color:var(--deep);}
+
+/* ═══════ CUSTOM CURSOR ═══════ */
+.cursor{
+  position:fixed;width:10px;height:10px;border-radius:50%;
+  background:var(--w);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .3s var(--ease),height .3s var(--ease),background .3s;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.5);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .12s linear,width .3s var(--ease),height .3s var(--ease),border-color .3s;
+}
+body:hover .cursor{opacity:1;}
+
+/* ═══════ HEADER ═══════ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:20px 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:transform .5s var(--ease), background .5s;
+}
+header.scrolled{
+  background:rgba(5,26,89,0.75);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+header.hidden{transform:translateY(-100%);}
+.logo-svg{
+  height:38px;filter:brightness(0) invert(1);
+  animation:logoIn 1.6s var(--ease) forwards;opacity:0;
+}
+@keyframes logoIn{
+  0%{opacity:0;filter:brightness(0) invert(0);transform:translateY(-8px);}
+  100%{opacity:1;filter:brightness(0) invert(1);transform:none;}
+}
+.header-nav{display:flex;gap:32px;align-items:center;}
+.header-nav a{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);
+  text-decoration:none;transition:color .3s;
+}
+.header-nav a:hover{color:#fff;}
+
+/* ═══════ FULLSCREEN GALLERY ═══════ */
+#fsg{position:relative;width:100%;height:100vh;overflow:hidden;background:var(--deep);}
+
+.fs-slide{
+  position:absolute;inset:0;opacity:0;pointer-events:none;
+  transition:opacity 1.4s cubic-bezier(.4,0,.2,1);
+}
+.fs-slide.active{opacity:1;pointer-events:all;}
+
+/* Ken Burns zoom */
+.fs-slide img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  display:block;z-index:0;position:relative;
+  transform:scale(1.08);
+  transition:transform 7s cubic-bezier(.1,.0,.2,1);
+}
+.fs-slide.active img{transform:scale(1.0);}
+
+/* gradient overlays */
+.fs-slide::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to top, rgba(5,26,89,0.92) 0%, rgba(5,26,89,0.45) 35%, transparent 65%),
+    linear-gradient(to right, rgba(5,26,89,0.6) 0%, transparent 55%);
+}
+
+/* placeholder bg */
+.fs-slide:nth-child(1){background:linear-gradient(135deg,#051A59,#071B8C,#0a3fa8);}
+.fs-slide:nth-child(2){background:linear-gradient(135deg,#071B8C,#0a5fa8,#5CC8F2);}
+.fs-slide:nth-child(3){background:linear-gradient(135deg,#042a6e,#0874b8,#9BDAF2);}
+.fs-slide:nth-child(4){background:linear-gradient(135deg,#051A59,#065080,#3db5eb);}
+
+.fs-ph{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;color:rgba(255,255,255,0.15);font-size:13px;text-align:center;
+}
+.fs-ph small{font-family:'Montserrat',monospace;font-size:10px;color:rgba(255,255,255,0.1);letter-spacing:1px;}
+
+/* text overlay */
+.fs-text{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:0 8% 90px;
+}
+.fs-eyebrow{
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:6px;text-transform:uppercase;color:var(--sky2);
+  margin-bottom:18px;
+  opacity:0;transform:translateY(22px);
+  transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease);
+}
+.fs-h{
+  font-weight:900;font-size:clamp(44px,7.5vw,104px);line-height:.95;
+  letter-spacing:-.03em;
+  background:linear-gradient(135deg,#fff 40%,var(--sky2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:22px;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .8s .25s var(--ease),transform .8s .25s var(--ease);
+}
+.fs-sub{
+  font-size:clamp(14px,1.5vw,17px);font-weight:300;
+  color:rgba(255,255,255,0.7);line-height:1.75;max-width:480px;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .8s .35s var(--ease),transform .8s .35s var(--ease);
+}
+.fs-slide.active .fs-eyebrow,
+.fs-slide.active .fs-h,
+.fs-slide.active .fs-sub{opacity:1;transform:none;}
+
+/* counter */
+.fs-counter{
+  position:absolute;right:8%;top:50%;transform:translateY(-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.fs-counter-num{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:2px;color:rgba(255,255,255,0.4);
+  writing-mode:vertical-rl;text-orientation:mixed;
+}
+.fs-counter-track{width:1px;height:80px;background:rgba(255,255,255,0.15);position:relative;}
+.fs-counter-fill{
+  position:absolute;top:0;left:0;width:1px;background:var(--w);
+  transition:height 5s linear;
+}
+
+/* nav dots */
+.fs-dots{
+  position:absolute;bottom:42px;left:8%;z-index:10;
+  display:flex;gap:10px;align-items:center;
+}
+.fs-dot{
+  width:24px;height:2px;border-radius:1px;
+  background:rgba(255,255,255,0.25);border:none;cursor:pointer;padding:0;
+  transition:all .4s var(--ease);
+}
+.fs-dot.active{width:44px;background:var(--w);}
+
+/* arrows */
+.fs-arrows{
+  position:absolute;bottom:36px;right:8%;z-index:10;
+  display:flex;gap:10px;
+}
+.fs-arr{
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(10px);
+  transition:background .3s,transform .25s var(--ease),border-color .3s;
+}
+.fs-arr:hover{background:rgba(255,255,255,0.18);transform:scale(1.1);border-color:rgba(255,255,255,0.5);}
+
+/* scroll hint */
+.fs-scroll{
+  position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,0.35);
+  font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  animation:scrollBounce 2.2s infinite;
+}
+@keyframes scrollBounce{
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(7px);}
+}
+
+/* ═══════ HERO ═══════ */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:120px 24px 80px;position:relative;overflow:hidden;
+  background:linear-gradient(170deg,#071B8C 0%,#0a3fa8 30%,#5CC8F2 70%,#9BDAF2 100%);
+}
+.hero-grain{
+  position:absolute;inset:0;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+.hero-glow{
+  position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(92,200,242,0.22) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-60%);
+  pointer-events:none;animation:glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse{
+  0%,100%{transform:translate(-50%,-60%) scale(1);opacity:.8;}
+  50%{transform:translate(-50%,-60%) scale(1.12);opacity:1;}
+}
+.bubble{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,0.05);
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(1);opacity:.5;}
+  100%{transform:translateY(-120vh) scale(.6);opacity:0;}
+}
+
+/* stagger word animation */
+.hero-eyebrow{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:6px;text-transform:uppercase;color:var(--sky2);
+  margin-bottom:24px;
+  opacity:0;animation:wordUp .9s .2s var(--ease) forwards;
+}
+.hero-title-wrap{overflow:hidden;margin-bottom:16px;}
+.hero-title{
+  font-weight:900;font-size:clamp(56px,10vw,130px);
+  line-height:.9;letter-spacing:-.04em;text-align:center;
+  display:block;
+  background:linear-gradient(135deg,#fff 50%,rgba(155,218,242,0.85));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:none;
+  transform:translateY(110%);
+  animation:titleSlide 1.1s .3s var(--ease) forwards;
+}
+@keyframes titleSlide{to{transform:translateY(0);}}
+.hero-title.line2{animation-delay:.45s;}
+
+.hero-sub{
+  font-size:clamp(15px,1.8vw,20px);font-weight:300;letter-spacing:.5px;
+  color:rgba(255,255,255,0.7);text-align:center;margin-bottom:52px;
+  opacity:0;animation:wordUp .9s .7s var(--ease) forwards;
+}
+@keyframes wordUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:none;}
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;border-radius:999px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(12px);
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:#fff;
+  text-decoration:none;cursor:pointer;
+  opacity:0;animation:wordUp .9s .9s var(--ease) forwards;
+  transition:background .35s,border-color .35s,transform .35s var(--ease);
+}
+.hero-cta:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5);transform:translateY(-3px);}
+.hero-cta svg{transition:transform .35s var(--ease);}
+.hero-cta:hover svg{transform:translateX(4px);}
+
+/* ── 히어로 파티클 캔버스 ── */
+#heroCanvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+/* ── 히어로 수평 드리프트 라인 ── */
+.hero-lines{
+  position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;
+}
+.hero-line{
+  position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(155,218,242,0.18),transparent);
+  animation:hLineDrift linear infinite;
+}
+@keyframes hLineDrift{
+  0%  {transform:translateY(110vh);}
+  100%{transform:translateY(-10vh);}
+}
+/* ── 히어로 타이틀 언더라인 애니메이션 ── */
+.hero-title-wrap{position:relative;}
+.hero-title-wrap:last-of-type::after{
+  content:'';
+  position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  width:0;height:2px;border-radius:1px;
+  background:linear-gradient(90deg,transparent,var(--sky2),transparent);
+  animation:lineGrow 1s 1.3s var(--ease) forwards;
+}
+@keyframes lineGrow{to{width:70%;}}
+
+/* ── 섹션 타이틀 클립 reveal (CHARACTER LINE-UP, CHARACTER MOMENTS 등) ── */
+.title-clip-wrap{
+  overflow:hidden;
+  display:block;
+  margin-bottom:90px;
+  text-align:center;
+}
+.title-clip-wrap .sec-title{
+  margin-bottom:0;
+  display:block;
+  transform:translateY(105%);
+  transition:transform 1s var(--ease);
+}
+.title-clip-wrap.in-view .sec-title{
+  transform:translateY(0);
+}
+/* CHARACTER LINE-UP — 그라데이션 */
+#characters .title-clip-wrap .sec-title{
+  background:linear-gradient(120deg,#fff 35%,var(--sky2) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:none;
+}
+/* CHARACTER MOMENTS — 흰→스카이 */
+#gallery .title-clip-wrap .sec-title{
+  background:linear-gradient(120deg,#fff 40%,var(--sky2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:none;
+}
+
+/* ═══════ CHARACTERS ═══════ */
+#characters{
+  padding:120px 24px 140px;
+  background:linear-gradient(180deg,var(--sky) 0%,#4ab8e8 100%);
+  position:relative;overflow:hidden;
+}
+#characters::before{
+  content:'CHARACTERS';
+  position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+  font-weight:900;font-size:clamp(60px,15vw,220px);letter-spacing:-.05em;
+  color:rgba(255,255,255,0.05);white-space:nowrap;user-select:none;pointer-events:none;
+}
+
+.sec-eyebrow{
+  text-align:center;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--navy);opacity:0.5;margin-bottom:12px;
+}
+.sec-title{
+  text-align:center;font-weight:900;
+  font-size:clamp(34px,6vw,72px);letter-spacing:-.03em;
+  color:var(--w);margin-bottom:90px;
+  text-shadow:0 2px 30px rgba(7,27,140,0.15);
+}
+
+.char-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:20px;max-width:1200px;margin:0 auto;
+}
+@media(max-width:900px){.char-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.char-grid{grid-template-columns:1fr 1fr;gap:12px;}}
+
+.char-card{
+  border-radius:24px;overflow:hidden;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  backdrop-filter:blur(12px);
+  padding-bottom:24px;
+  /* scroll-driven */
+  opacity:0;transform:translateY(60px) scale(0.95);
+  transition:
+    opacity .9s var(--ease),
+    transform .9s var(--ease),
+    box-shadow .4s,
+    border-color .4s;
+}
+.char-card.visible{opacity:1;transform:none;}
+.char-card.visible:hover{
+  transform:translateY(-12px) scale(1.02);
+  box-shadow:0 32px 70px rgba(5,26,89,0.35);
+  border-color:rgba(255,255,255,0.3);
+}
+.char-card:nth-child(2){transition-delay:.08s;}
+.char-card:nth-child(3){transition-delay:.16s;}
+.char-card:nth-child(4){transition-delay:.24s;}
+
+.char-img-area{
+  width:100%;aspect-ratio:3/4;position:relative;overflow:hidden;
+}
+.char-card:nth-child(1) .char-img-area{background:linear-gradient(160deg,#051A59,#071B8C);}
+.char-card:nth-child(2) .char-img-area{background:linear-gradient(160deg,#083872,#0a4fa3);}
+.char-card:nth-child(3) .char-img-area{background:linear-gradient(160deg,#065080,#0874b8);}
+.char-card:nth-child(4) .char-img-area{background:linear-gradient(160deg,#042a6e,#0e4a9e);}
+.char-img-area::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top,rgba(5,26,89,0.6),transparent);
+  z-index:2;pointer-events:none;
+}
+.char-img-area img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  z-index:1;display:block;
+  transform:scale(1.05);
+  transition:transform .6s var(--ease);
+}
+.char-card.visible:hover .char-img-area img{transform:scale(1.0);}
+
+.char-badge{
+  position:absolute;top:14px;left:14px;z-index:3;
+  background:rgba(92,200,242,0.2);border:1px solid rgba(155,218,242,0.35);
+  border-radius:999px;padding:4px 11px;
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:#fff;
+  backdrop-filter:blur(8px);
+}
+.char-ph{
+  position:absolute;inset:0;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;color:rgba(255,255,255,0.18);font-size:11px;text-align:center;
+}
+.char-ph small{font-family:'Montserrat',monospace;font-size:9px;color:rgba(255,255,255,0.12);letter-spacing:1px;}
+.char-info{padding:18px 20px 0;}
+.char-name{
+  font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;
+  color:#fff;margin-bottom:4px;
+}
+.char-role{
+  font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  color:var(--sky2);margin-bottom:10px;
+}
+.char-desc{font-size:12.5px;font-weight:300;line-height:1.75;color:rgba(255,255,255,0.65);}
+
+/* ═══════ UNIVERSAL DESIGN ═══════ */
+#intro{
+  padding:0 0 0;
+  background:var(--deep);
+  position:relative;overflow:hidden;
+}
+
+/* 섹션 헤더 — sticky */
+.intro-header{
+  padding:110px 24px 70px;
+  text-align:center;
+  position:relative;
+}
+.intro-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:100px;
+  background:linear-gradient(to bottom,#4ab8e8,var(--deep));
+}
+.intro-badge{
+  display:inline-block;padding:6px 18px;border-radius:999px;
+  border:1px solid rgba(155,218,242,0.35);
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:4px;text-transform:uppercase;color:var(--sky2);
+  margin-bottom:22px;position:relative;
+}
+.intro-h{
+  font-weight:900;font-size:clamp(28px,5vw,58px);letter-spacing:-.03em;
+  color:#fff;line-height:1.15;position:relative;
+}
+
+/* 3카드 — 세로 스크롤 애니메이션 */
+.intro-cards-wrap{
+  max-width:1100px;margin:0 auto;
+  padding:20px 24px 120px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+@media(max-width:860px){.intro-cards-wrap{grid-template-columns:1fr;}}
+
+.intro-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(155,218,242,0.14);
+  border-radius:22px;padding:36px 30px 40px;
+  position:relative;overflow:hidden;
+  opacity:0;transform:translateY(50px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),background .3s,border-color .3s;
+}
+.intro-card.visible{opacity:1;transform:none;}
+.intro-card:nth-child(2){transition-delay:.1s;}
+.intro-card:nth-child(3){transition-delay:.2s;}
+.intro-card::before{
+  content:'';position:absolute;
+  top:-60px;right:-60px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(92,200,242,0.08),transparent 70%);
+  pointer-events:none;
+}
+.intro-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(155,218,242,0.3);}
+.intro-num{
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:3px;color:var(--sky2);margin-bottom:12px;display:block;
+}
+.intro-card h3{
+  font-weight:800;font-size:20px;color:#fff;
+  margin-bottom:20px;letter-spacing:-.02em;
+}
+.intro-card p{font-size:13.5px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.6);}
+.intro-card p+p{margin-top:13px;}
+
+/* ═══════ MODAL ═══════ */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(5,26,89,0.94);z-index:1000;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .35s;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.modal-bg.open{opacity:1;pointer-events:all;}
+.modal-content{
+  max-width:960px;width:100%;border-radius:20px;overflow:hidden;
+  position:relative;transform:scale(0.88) translateY(20px);
+  transition:transform .5s var(--ease);
+  box-shadow:0 60px 120px rgba(0,0,0,0.6);
+}
+.modal-bg.open .modal-content{transform:scale(1) translateY(0);}
+.modal-img-area{
+  aspect-ratio:16/9;width:100%;
+  display:flex;align-items:center;justify-content:center;background:#051A59;
+}
+.modal-img-area img{width:100%;height:100%;object-fit:contain;}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,0.12);border:none;color:#fff;
+  width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s,transform .25s;backdrop-filter:blur(8px);z-index:10;
+}
+.modal-close:hover{background:rgba(255,255,255,0.25);transform:rotate(90deg);}
+
+/* ═══════ GALLERY SLIDER ═══════ */
+#gallery{
+  padding:100px 0 110px;
+  background:linear-gradient(180deg,#4ab8e8 0%,var(--deep) 100%);
+  overflow:hidden;position:relative;
+}
+#gallery::before{
+  content:'MOMENTS';
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  font-weight:900;font-size:clamp(60px,18vw,260px);letter-spacing:-.05em;
+  color:rgba(255,255,255,0.04);white-space:nowrap;user-select:none;pointer-events:none;
+}
+.gal-header{padding:0 24px 56px;text-align:center;}
+.gal-header .sec-eyebrow{color:var(--sky2);opacity:0.55;}
+.gal-header .sec-title{color:var(--w);}
+
+.gal-wrap{position:relative;width:100%;overflow:hidden;}
+.gal-track{
+  display:flex;gap:20px;padding:10px 24px;
+  will-change:transform;
+}
+.gal-item{
+  flex:0 0 clamp(260px,36vw,480px);
+  aspect-ratio:4/3;border-radius:20px;overflow:hidden;
+  position:relative;cursor:pointer;
+  background:linear-gradient(135deg,var(--deep),var(--navy));
+  box-shadow:0 14px 44px rgba(0,0,0,0.35);
+  transition:transform .4s var(--ease),box-shadow .4s;
+}
+.gal-item:hover{transform:scale(1.04);box-shadow:0 28px 64px rgba(0,0,0,0.5);}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-item img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;z-index:1;
+}
+.gal-ph{
+  position:absolute;inset:0;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;color:rgba(255,255,255,0.22);font-size:13px;text-align:center;
+}
+.gal-ph small{font-family:'Montserrat',monospace;font-size:10px;color:rgba(255,255,255,0.14);letter-spacing:1px;}
+.gal-overlay{
+  position:absolute;inset:0;background:rgba(7,27,140,0.62);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s;backdrop-filter:blur(3px);z-index:3;
+}
+.gal-overlay span{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:#fff;
+  border:1px solid rgba(255,255,255,0.45);border-radius:999px;padding:8px 22px;
+}
+.gal-nav{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-top:38px;
+}
+.gal-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,0.25);transition:all .35s;
+  cursor:pointer;border:none;padding:0;
+}
+.gal-dot.active{background:var(--sky2);width:26px;border-radius:4px;}
+.gal-btn{
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;width:42px;height:42px;border-radius:50%;font-size:17px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s,transform .25s var(--ease);backdrop-filter:blur(8px);
+}
+.gal-btn:hover{background:rgba(255,255,255,0.2);transform:scale(1.1);}
+
+/* ═══════ CHATBOT GALLERY ═══════ */
+#chatbot-gallery{
+  padding:110px 0 130px;
+  background:linear-gradient(180deg, #051A59 0%, #020b28 100%);
+  overflow:hidden;
+  position:relative;
+}
+#chatbot-gallery::before{
+  content:'CHATBOT';
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  font-weight:900;font-size:clamp(60px,16vw,240px);letter-spacing:-.05em;
+  color:rgba(255,255,255,0.03);white-space:nowrap;user-select:none;pointer-events:none;
+}
+
+.cb-header{
+  padding:0 24px 64px;
+  text-align:center;
+}
+.cb-eyebrow{
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--sky2);opacity:.6;margin-bottom:14px;
+}
+.cb-title-wrap{overflow:hidden;display:block;margin-bottom:16px;}
+.cb-title{
+  font-weight:900;font-size:clamp(30px,5.5vw,64px);
+  letter-spacing:-.03em;color:#fff;
+  display:block;
+  transform:translateY(105%);
+  transition:transform 1s var(--ease);
+}
+.cb-title-wrap.in-view .cb-title{transform:translateY(0);}
+.cb-desc{
+  font-size:14px;font-weight:300;line-height:1.8;
+  color:rgba(255,255,255,0.5);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
+}
+.cb-desc.visible{opacity:1;transform:none;}
+
+/* 슬라이드 트랙 */
+.cb-track-wrap{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  padding:20px 0 30px;
+}
+
+/* 좌우 페이드 마스크 */
+.cb-track-wrap::before,
+.cb-track-wrap::after{
+  content:'';
+  position:absolute;top:0;bottom:0;width:120px;z-index:10;pointer-events:none;
+}
+.cb-track-wrap::before{
+  left:0;
+  background:linear-gradient(to right,#051A59,transparent);
+}
+.cb-track-wrap::after{
+  right:0;
+  background:linear-gradient(to left,#020b28,transparent);
+}
+
+.cb-track{
+  display:flex;
+  gap:24px;
+  padding:0 80px;
+  will-change:transform;
+}
+
+/* 핸드폰 비율 카드 (9:19.5 ≈ iPhone) */
+.cb-card{
+  flex:0 0 clamp(160px,18vw,240px);
+  aspect-ratio:9/19.5;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  background:linear-gradient(160deg,#071B8C,#0a3fa8);
+  border:1px solid rgba(155,218,242,0.12);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  transition:transform .4s var(--ease),box-shadow .4s,border-color .4s;
+  /* 폰 테두리 느낌 — 상단 노치 */
+}
+.cb-card::before{
+  content:'';
+  position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  width:38px;height:5px;border-radius:3px;
+  background:rgba(255,255,255,0.12);
+  z-index:4;pointer-events:none;
+}
+.cb-card:hover{
+  transform:translateY(-14px) scale(1.03);
+  box-shadow:0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(155,218,242,0.25);
+  border-color:rgba(155,218,242,0.3);
+}
+.cb-card:hover .cb-card-overlay{opacity:1;}
+
+.cb-card img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;z-index:1;
+}
+.cb-card-ph{
+  position:absolute;inset:0;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;color:rgba(255,255,255,0.2);font-size:11px;text-align:center;
+}
+.cb-card-ph small{
+  font-family:'Montserrat',monospace;font-size:9px;
+  color:rgba(255,255,255,0.12);letter-spacing:1px;
+}
+.cb-card-overlay{
+  position:absolute;inset:0;z-index:3;
+  background:linear-gradient(to top,rgba(5,26,89,0.85) 0%,transparent 50%);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:18px;
+  opacity:0;transition:opacity .35s;
+}
+.cb-card-overlay span{
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.85);
+  border:1px solid rgba(255,255,255,0.3);border-radius:999px;
+  padding:5px 14px;backdrop-filter:blur(6px);
+}
+
+/* 번호 인디케이터 */
+.cb-card-num{
+  position:absolute;top:20px;left:14px;z-index:4;
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:2px;color:rgba(255,255,255,0.4);
+}
+
+/* 네비게이션 */
+.cb-nav{
+  display:flex;align-items:center;justify-content:center;
+  gap:12px;margin-top:40px;
+}
+.cb-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  border:none;cursor:pointer;padding:0;
+  transition:all .35s;
+}
+.cb-dot.active{background:var(--sky2);width:22px;border-radius:3px;}
+.cb-btn{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.15);
+  color:#fff;width:40px;height:40px;border-radius:50%;font-size:16px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  transition:background .3s,transform .25s var(--ease);
+}
+.cb-btn:hover{background:rgba(255,255,255,0.18);transform:scale(1.1);}
+
+/* 모달 — 핸드폰 비율 */
+.cb-modal-bg{
+  position:fixed;inset:0;background:rgba(2,11,40,0.95);z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;opacity:0;pointer-events:none;
+  transition:opacity .35s;backdrop-filter:blur(20px);
+}
+.cb-modal-bg.open{opacity:1;pointer-events:all;}
+.cb-modal-inner{
+  position:relative;
+  width:min(340px,80vw);
+  aspect-ratio:9/19.5;
+  border-radius:32px;overflow:hidden;
+  background:var(--deep);
+  box-shadow:0 60px 120px rgba(0,0,0,0.7);
+  transform:scale(0.88) translateY(24px);
+  transition:transform .5s var(--ease);
+  border:1px solid rgba(155,218,242,0.15);
+}
+.cb-modal-bg.open .cb-modal-inner{transform:scale(1) translateY(0);}
+.cb-modal-inner img{
+  width:100%;height:100%;object-fit:cover;object-position:top;display:block;
+}
+.cb-modal-close{
+  position:absolute;top:-48px;right:0;
+  background:rgba(255,255,255,0.1);border:none;color:#fff;
+  width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .25s,transform .25s;backdrop-filter:blur(8px);
+}
+.cb-modal-close:hover{background:rgba(255,255,255,0.25);transform:rotate(90deg);}
+
+/* ═══════ FOOTER ═══════ */
+footer{
+  background:#020b28;padding:70px 24px 44px;
+  position:relative;overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(7,27,140,0.25),transparent);
+  pointer-events:none;
+}
+.footer-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.footer-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;gap:40px;padding-bottom:44px;
+  border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:32px;
+}
+.footer-brand h2{
+  font-weight:900;font-size:34px;color:#fff;letter-spacing:2px;margin-bottom:8px;
+}
+.footer-brand p{font-size:12px;font-weight:300;color:rgba(255,255,255,0.35);letter-spacing:1px;}
+.footer-col h4{
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--sky2);margin-bottom:14px;
+}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:9px;}
+.footer-col ul li a{
+  text-decoration:none;font-size:13px;font-weight:300;
+  color:rgba(255,255,255,0.45);transition:color .25s;
+}
+.footer-col ul li a:hover{color:#fff;}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+}
+.footer-bottom p{font-size:11px;font-weight:300;color:rgba(255,255,255,0.25);letter-spacing:.4px;}
+.footer-bar{width:44px;height:2px;background:linear-gradient(to right,var(--navy),var(--sky));border-radius:1px;}
+
+/* ═══════ SCROLL PROGRESS BAR ═══════ */
+#spb{
+  position:fixed;top:0;left:0;height:2.5px;
+  background:linear-gradient(to right,var(--sky2),var(--w),var(--sky2));
+  z-index:600;width:0%;
+  transition:width .05s linear;
+  box-shadow:0 0 10px rgba(155,218,242,0.6);
+}
+
+/* ═══════ SECTION DIVIDERS ═══════ */
+.wave-divider{display:block;width:100%;overflow:hidden;line-height:0;}
+.wave-divider svg{display:block;width:100%;}
+
+@media(max-width:768px){
+  header{padding:16px 22px;}
+  .header-nav{display:none;}
+  .fs-text{padding:0 6% 110px;}
+  .fs-counter{display:none;}
+  .pin-frame{width:96%;}
+  .intro-header{padding:80px 24px 50px;}
+  .footer-top{flex-direction:column;gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- scroll progress -->
+<div id="spb"></div>
+
+<!-- ══ HEADER ══ -->
+<header id="hdr">
+  <svg class="logo-svg" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg" fill="white">
+    <circle cx="22" cy="22" r="18" fill="white" opacity="0.9"/>
+    <path d="M22 10 C28 10 34 16 34 22 C34 28 28 34 22 34" stroke="#071B8C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M22 34 C16 34 10 28 10 22 C10 16 16 10 22 10" stroke="#C8102E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="50" y="16" font-family="'Montserrat',sans-serif" font-size="9" font-weight="700" letter-spacing="3" fill="white" text-anchor="start">KOREAN AIR</text>
+    <text x="50" y="32" font-family="'Pretendard Variable',sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="start">대한항공</text>
+  </svg>
+  <nav class="header-nav">
+    <a href="#hero">소개</a>
+    <a href="#characters">캐릭터</a>
+    <a href="#intro">디자인</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════
+     FULLSCREEN GALLERY (최상단)
+══════════════════════════════ -->
+<section id="fsg">
+
+  <div class="fs-slide active" id="s0">
+    <img id="fi0" src="" alt="" style="display:none;">
+    <div class="fs-ph" id="fp0"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 1<br><small>gallery1.png</small></span></div>
+    <div class="fs-text">
+      <p class="fs-eyebrow">Korean Air · Universal Design Characters</p>
+      <h2 class="fs-h">모두를 위한<br>하늘</h2>
+      <p class="fs-sub">국적, 나이, 장애를 뛰어넘는<br>대한항공 공식 캐릭터를 소개합니다.</p>
+    </div>
+  </div>
+
+  <div class="fs-slide" id="s1">
+    <img id="fi1" src="" alt="" style="display:none;">
+    <div class="fs-ph" id="fp1"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 2<br><small>gallery2.png</small></span></div>
+    <div class="fs-text">
+      <p class="fs-eyebrow">Character Line-up</p>
+      <h2 class="fs-h">네 가지<br>이야기</h2>
+      <p class="fs-sub">파일럿부터 마스코트까지,<br>각기 다른 개성과 역할로 함께합니다.</p>
+    </div>
+  </div>
+
+  <div class="fs-slide" id="s2">
+    <img id="fi2" src="" alt="" style="display:none;">
+    <div class="fs-ph" id="fp2"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 3<br><small>gallery3.png</small></span></div>
+    <div class="fs-text">
+      <p class="fs-eyebrow">Universal Design</p>
+      <h2 class="fs-h">직관적인<br>시각 언어</h2>
+      <p class="fs-sub">복잡한 탑승 절차도 캐릭터의 행동으로<br>친절하고 명확하게 전달합니다.</p>
+    </div>
+  </div>
+
+  <div class="fs-slide" id="s3">
+    <img id="fi3" src="" alt="" style="display:none;">
+    <div class="fs-ph" id="fp3"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 4<br><small>gallery4.png</small></span></div>
+    <div class="fs-text">
+      <p class="fs-eyebrow">Korean Air · ESG</p>
+      <h2 class="fs-h">포용성으로<br>나아가다</h2>
+      <p class="fs-sub">누구나 편안하게 다가갈 수 있는<br>대한항공의 새로운 브랜드 가치.</p>
+    </div>
+  </div>
+
+  <!-- counter -->
+  <div class="fs-counter">
+    <div class="fs-counter-track"><div class="fs-counter-fill" id="fsCountFill"></div></div>
+    <div class="fs-counter-num" id="fsCountNum">01 / 04</div>
+  </div>
+
+  <!-- dots -->
+  <div class="fs-dots">
+    <button class="fs-dot active" data-fs="0"></button>
+    <button class="fs-dot" data-fs="1"></button>
+    <button class="fs-dot" data-fs="2"></button>
+    <button class="fs-dot" data-fs="3"></button>
+  </div>
+
+  <!-- arrows -->
+  <div class="fs-arrows">
+    <button class="fs-arr" id="fsPrev">&#8592;</button>
+    <button class="fs-arr" id="fsNext">&#8594;</button>
+  </div>
+
+  <!-- scroll hint -->
+  <div class="fs-scroll">
+    <svg width="18" height="22" viewBox="0 0 18 22" fill="none"><rect x="1" y="1" width="16" height="20" rx="8" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/><circle cx="9" cy="7" r="2.2" fill="rgba(255,255,255,0.4)"/></svg>
+    <span>SCROLL</span>
+  </div>
+
+</section>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-lines">
+    <div class="hero-line" style="animation-duration:20s;animation-delay:0s;"></div>
+    <div class="hero-line" style="animation-duration:15s;animation-delay:6s;opacity:.6;"></div>
+    <div class="hero-line" style="animation-duration:25s;animation-delay:12s;opacity:.35;"></div>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-glow"></div>
+  <div class="bubble" style="width:100px;height:100px;left:7%;top:25%;animation-duration:17s;"></div>
+  <div class="bubble" style="width:55px;height:55px;left:18%;top:65%;animation-duration:13s;animation-delay:2s;"></div>
+  <div class="bubble" style="width:180px;height:180px;right:6%;top:12%;animation-duration:21s;animation-delay:1s;"></div>
+  <div class="bubble" style="width:38px;height:38px;right:22%;top:72%;animation-duration:11s;animation-delay:4s;"></div>
+  <div class="bubble" style="width:75px;height:75px;left:48%;top:8%;animation-duration:15s;animation-delay:1.5s;"></div>
+
+  <p class="hero-eyebrow">Korean Air · Official Characters</p>
+  <div class="hero-title-wrap">
+    <span class="hero-title">MEET THE</span>
+  </div>
+  <div class="hero-title-wrap">
+    <span class="hero-title line2">CREW</span>
+  </div>
+  <p class="hero-sub">모두를 위한 하늘, 대한항공 공식 캐릭터를 소개합니다</p>
+  <a class="hero-cta" href="#characters">
+    캐릭터 보기
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<!-- ══ CHARACTERS ══ -->
+<section id="characters">
+  <p class="sec-eyebrow reveal">Our Characters</p>
+  <div class="title-clip-wrap">
+    <h2 class="sec-title">CHARACTER LINE-UP</h2>
+  </div>
+  <div class="char-grid">
+
+    <div class="char-card" id="cc1">
+      <div class="char-img-area">
+        <div class="char-badge">No.01</div>
+        <img id="imgChar1" src="" alt="에어로" style="display:none;">
+        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char1.png</small></span></div>
+      </div>
+      <div class="char-info">
+        <p class="char-name">비상</p>
+        <p class="char-role">Captain · 하늘 위의 든든한 기장</p>
+        <p class="char-desc">항공기의 최고 책임자인 기장과 한국의 하늘을 호령하는 검독수리의 결합으로 탄생한 캐릭터입니다. 이륙부터 착륙까지 비행의 전 과정을 통제하는 기장의 리더쉽을 시각화했습니다.</p>
+      </div>
+    </div>
+
+    <div class="char-card" id="cc2">
+      <div class="char-img-area">
+        <div class="char-badge">No.02</div>
+        <img id="imgChar2" src="" alt="스카이" style="display:none;">
+        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char2.png</small></span></div>
+      </div>
+      <div class="char-info">
+        <p class="char-name">기류</p>
+        <p class="char-role">First Officer · 하늘과 바람을 읽는 부기장</p>
+        <p class="char-desc">비행의 세밀한 부분을 조율하는 부기장과 날렵한 사냥꾼의 결합으로 탄생한 캐릭터입니다. 빽빽한 숲속을 스치듯 비행하는 참매처럼 변수에 빠르게 대처하는 부기장의 섬세함을 시각화했습니다.</p>
+      </div>
+    </div>
+
+    <div class="char-card" id="cc3">
+      <div class="char-img-area">
+        <div class="char-badge">No.03</div>
+        <img id="imgChar3" src="" alt="클라우드" style="display:none;">
+        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char3.png</small></span></div>
+      </div>
+      <div class="char-info">
+        <p class="char-name">누리</p>
+        <p class="char-role">Flight attendant · 플라이 어텐던트</p>
+        <p class="char-desc">국경을 넘어 전 세계 승객과 소통하는 객실 승무원과 한국의 산천을 뛰노는 영물 꽃사슴의 결합으로 탄생한 캐릭터입니다. 맑고 커다란 눈망울로 승객의 마음을 읽어내는 영민함을 시각화했습니다.</p>
+      </div>
+    </div>
+
+    <div class="char-card" id="cc4">
+      <div class="char-img-area">
+        <div class="char-badge">No.04</div>
+        <img id="imgChar4" src="" alt="루미" style="display:none;">
+        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char4.png</small></span></div>
+      </div>
+      <div class="char-info">
+        <p class="char-name">가온</p>
+        <p class="char-role">Flight attendant · 플라이 어텐던트</p>
+        <p class="char-desc">기내 안전과 서비스의 중심을 잡는 객실 승무원과 기품 있고 단아한 꽃사슴의 결합으로 탄생한 캐릭터입니다. 절제된 매너와 깊이 있는 배려로 기내의 안전을 책임지는 차분함을 시각화했습니다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ GALLERY SLIDER ══ -->
+<section id="gallery">
+  <div class="gal-header">
+    <p class="sec-eyebrow reveal">Gallery</p>
+    <div class="title-clip-wrap">
+      <h2 class="sec-title">CHARACTER DESIGN</h2>
+    </div>
+  </div>
+  <div class="gal-wrap">
+    <div class="gal-track" id="galTrack">
+      <div class="gal-item" data-index="0">
+        <img id="galImg0" src="" alt="Gallery 1" style="display:none;">
+        <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 1<br><small>gallery1.png</small></span></div>
+        <div class="gal-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="gal-item" data-index="1">
+        <img id="galImg1" src="" alt="Gallery 2" style="display:none;">
+        <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 2<br><small>gallery2.png</small></span></div>
+        <div class="gal-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="gal-item" data-index="2">
+        <img id="galImg2" src="" alt="Gallery 3" style="display:none;">
+        <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 3<br><small>gallery3.png</small></span></div>
+        <div class="gal-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="gal-item" data-index="3">
+        <img id="galImg3" src="" alt="Gallery 4" style="display:none;">
+        <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 4<br><small>gallery4.png</small></span></div>
+        <div class="gal-overlay"><span>크게 보기</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="gal-nav">
+    <button class="gal-btn" id="galPrev">&#8592;</button>
+    <button class="gal-dot active" data-dot="0"></button>
+    <button class="gal-dot" data-dot="1"></button>
+    <button class="gal-dot" data-dot="2"></button>
+    <button class="gal-dot" data-dot="3"></button>
+    <button class="gal-btn" id="galNext">&#8594;</button>
+  </div>
+</section>
+
+<!-- ══ CHATBOT GALLERY ══ -->
+<section id="chatbot-gallery">
+  <div class="cb-header">
+    <p class="cb-eyebrow reveal">Application</p>
+    <div class="cb-title-wrap">
+      <span class="cb-title">캐릭터 실무 적용안</span>
+    </div>
+    <p class="cb-desc reveal">홈페이지 챗봇 UI에 적용된 캐릭터 디자인 적용안</p>
+  </div>
+
+  <div class="cb-track-wrap">
+    <div class="cb-track" id="cbTrack">
+      <div class="cb-card" data-cb="0">
+        <div class="cb-card-num">01</div>
+        <img id="cbImg0" src="" alt="챗봇 적용안 1" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot1.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="cb-card" data-cb="1">
+        <div class="cb-card-num">02</div>
+        <img id="cbImg1" src="" alt="챗봇 적용안 2" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot2.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="cb-card" data-cb="2">
+        <div class="cb-card-num">03</div>
+        <img id="cbImg2" src="" alt="챗봇 적용안 3" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot3.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="cb-card" data-cb="3">
+        <div class="cb-card-num">04</div>
+        <img id="cbImg3" src="" alt="챗봇 적용안 4" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot4.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="cb-card" data-cb="4">
+        <div class="cb-card-num">05</div>
+        <img id="cbImg4" src="" alt="챗봇 적용안 5" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot5.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+      <div class="cb-card" data-cb="5">
+        <div class="cb-card-num">06</div>
+        <img id="cbImg5" src="" alt="챗봇 적용안 6" style="display:none;">
+        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot6.png</span></div>
+        <div class="cb-card-overlay"><span>크게 보기</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb-nav">
+    <button class="cb-btn" id="cbPrev">&#8592;</button>
+    <button class="cb-dot active" data-cb-dot="0"></button>
+    <button class="cb-dot" data-cb-dot="1"></button>
+    <button class="cb-dot" data-cb-dot="2"></button>
+    <button class="cb-dot" data-cb-dot="3"></button>
+    <button class="cb-dot" data-cb-dot="4"></button>
+    <button class="cb-dot" data-cb-dot="5"></button>
+    <button class="cb-btn" id="cbNext">&#8594;</button>
+  </div>
+</section>
+
+<!-- 챗봇 모달 -->
+<div class="cb-modal-bg" id="cbModal">
+  <div style="position:relative;">
+    <button class="cb-modal-close" id="cbModalClose">&#10005;</button>
+    <div class="cb-modal-inner" id="cbModalInner"></div>
+  </div>
+</div>
+
+<!-- ══ UNIVERSAL DESIGN ══ -->
+<section id="intro">
+  <div class="intro-header">
+    <div class="intro-badge reveal">Universal Design</div>
+    <h2 class="intro-h reveal" style="transition-delay:.1s">기내 환경의<br>유니버설 디자인 실현</h2>
+  </div>
+  <div class="intro-cards-wrap">
+    <div class="intro-card" id="ic1">
+      <span class="intro-num">01 · 현황</span>
+      <h3>접근성의 한계</h3>
+      <p>공항과 기내 환경은 복잡하여 언어 장벽이 있는 외국인, 텍스트 이해가 어려운 노약자와 어린이, 인지적 장애가 있는 승객 등에게 정보 접근성이 낮다.</p>
+      <p>기존의 텍스트나 경직된 픽토그램만으로는 충분한 안내와 정서적 안정을 제공하기에 한계가 있다.</p>
+    </div>
+    <div class="intro-card" id="ic2">
+      <span class="intro-num">02 · 기대효과</span>
+      <h3>모두를 위한 시각 언어</h3>
+      <p>캐릭터는 국적, 나이, 장애 여부를 뛰어넘는 시각적 공용어로 기능한다. 복잡한 탑승 수속, 길 찾기, 비상시 대피 요령 등을 캐릭터의 행동으로 직관적이고 친절하게 시각화한다.</p>
+      <p>낯선 환경에서 불안감을 느끼는 사회적 약자들에게 친근한 캐릭터는 심리적 장벽을 낮추고 안정감을 제공한다.</p>
+    </div>
+    <div class="intro-card" id="ic3">
+      <span class="intro-num">03 · 브랜드 가치 확장</span>
+      <h3>포용성으로 나아가는 항공</h3>
+      <p>이는 대한항공이 추구하는 ESG 경영의 '포용성' 가치를 실현하는 방향이 된다.</p>
+      <p>'가장 안전하고 고급스러운 항공사'라는 기존 타이틀에 '누구나 쉽고 편안하게 다가갈 수 있는' 수식어를 더하며 더 넓은 대중에게 나아간다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-bg" id="modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">&#10005;</button>
+    <div class="modal-img-area" id="modalImgArea"></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top reveal">
+      <div class="footer-brand">
+        <h2>대한항공</h2>
+        <p>Korean Air Lines Co., Ltd.</p>
+        <p style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.2);">하늘을 잇는 대한민국의 날개</p>
+      </div>
+      <div class="footer-col">
+        <h4>디자이너</h4>
+        <ul>
+          <li><a href="#">22101839 최지안</a></li>
+          <li><a href="#">imcja007@gmail.com</a></li>
+          <li><a href="#">23101808 홍선경 </a></li>
+          <li><a href="#">@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom reveal" style="transition-delay:.1s">
+      <p>© 2026. All rights reserved.</p>
+      <div class="footer-bar"></div>
+      <p>CONTENTS DESIGN</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── 이미지 주입 ── */
+function applyImg(imgId, src, containerId, phSel) {
+  var img = document.getElementById(imgId);
+  if (!img || !src) return;
+  img.src = src;
+  img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;z-index:1;';
+  var cont = document.getElementById(containerId);
+  if (cont) { var ph = cont.querySelector(phSel||'.fs-ph,.pin-placeholder,.char-ph'); if(ph) ph.style.display='none'; }
+}
+applyImg('fi0', IMAGES.fs1, 's0', '.fs-ph');
+applyImg('fi1', IMAGES.fs2, 's1', '.fs-ph');
+applyImg('fi2', IMAGES.fs3, 's2', '.fs-ph');
+applyImg('fi3', IMAGES.fs4, 's3', '.fs-ph');
+applyImg('imgChar1',IMAGES.char1,   'cc1','.char-ph');
+applyImg('imgChar2',IMAGES.char2,   'cc2','.char-ph');
+applyImg('imgChar3',IMAGES.char3,   'cc3','.char-ph');
+applyImg('imgChar4',IMAGES.char4,   'cc4','.char-ph');
+
+/* ── 커스텀 커서 ── */
+var cur=document.getElementById('cur'), curR=document.getElementById('curR');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function animCursor(){
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a,button,.fs-slide,.char-card,.intro-card').forEach(function(el){
+  el.addEventListener('mouseenter',function(){
+    cur.style.width='20px';cur.style.height='20px';
+    curR.style.width='60px';curR.style.height='60px';
+    curR.style.borderColor='rgba(255,255,255,0.8)';
+  });
+  el.addEventListener('mouseleave',function(){
+    cur.style.width='10px';cur.style.height='10px';
+    curR.style.width='40px';curR.style.height='40px';
+    curR.style.borderColor='rgba(255,255,255,0.5)';
+  });
+});
+
+/* ── 스크롤 진행 바 ── */
+var spb=document.getElementById('spb');
+window.addEventListener('scroll',function(){
+  var pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  spb.style.width=pct+'%';
+},{passive:true});
+
+/* ── 헤더 ── */
+var hdr=document.getElementById('hdr'),lastY=0;
+window.addEventListener('scroll',function(){
+  var y=window.scrollY;
+  hdr.classList.toggle('scrolled',y>60);
+  hdr.classList.toggle('hidden',y>120&&y>lastY);
+  if(y<120||y<lastY) hdr.classList.remove('hidden');
+  lastY=y;
+},{passive:true});
+
+/* ── 풀스크린 갤러리 ── */
+(function(){
+  var TOTAL=4,cur=0,timer=null,INTERVAL=5500;
+  var slides=document.querySelectorAll('.fs-slide');
+  var dots=document.querySelectorAll('.fs-dot');
+  var fillEl=document.getElementById('fsCountFill');
+  var numEl=document.getElementById('fsCountNum');
+  var pStart=null,pAnim=null;
+
+  function goTo(i){
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur=(i+TOTAL)%TOTAL;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+    numEl.textContent='0'+(cur+1)+' / 0'+TOTAL;
+    startFill();
+  }
+  function startFill(){
+    if(pAnim) cancelAnimationFrame(pAnim);
+    if(fillEl){ fillEl.style.transition='none'; fillEl.style.height='0%'; }
+    pStart=performance.now();
+    function step(now){
+      var p=Math.min(((now-pStart)/INTERVAL)*100,100);
+      if(fillEl) fillEl.style.height=p+'%';
+      if(p<100) pAnim=requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function startAuto(){timer=setInterval(function(){goTo(cur+1);},INTERVAL);}
+  function resetAuto(){clearInterval(timer);startAuto();}
+
+  document.getElementById('fsNext').addEventListener('click',function(){goTo(cur+1);resetAuto();});
+  document.getElementById('fsPrev').addEventListener('click',function(){goTo(cur-1);resetAuto();});
+  dots.forEach(function(d){
+    d.addEventListener('click',function(){goTo(parseInt(d.dataset.fs));resetAuto();});
+  });
+
+  /* 클릭 → 모달 */
+  var modal=document.getElementById('modal');
+  var mia=document.getElementById('modalImgArea');
+  document.getElementById('modalClose').addEventListener('click',function(){modal.classList.remove('open');});
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('open');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')modal.classList.remove('open');});
+
+  var galSrcs=[IMAGES.fs1,IMAGES.fs2,IMAGES.fs3,IMAGES.fs4];
+  document.getElementById('fsg').addEventListener('click',function(e){
+    if(e.target.closest('.fs-dots,.fs-arrows,.fs-scroll,.fs-counter')) return;
+    var src=galSrcs[cur];
+    if(src){
+      mia.style.background='#051A59';
+      mia.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:contain;">';
+      modal.classList.add('open');
+    }
+  });
+
+  /* 스와이프 */
+  var tx=0;
+  var fsg=document.getElementById('fsg');
+  fsg.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  fsg.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>50){dx<0?goTo(cur+1):goTo(cur-1);resetAuto();}
+  },{passive:true});
+
+  startAuto(); startFill();
+})();
+
+applyImg('galImg0', IMAGES.gallery1, null, null);
+applyImg('galImg1', IMAGES.gallery2, null, null);
+applyImg('galImg2', IMAGES.gallery3, null, null);
+applyImg('galImg3', IMAGES.gallery4, null, null);
+
+// 갤러리 이미지 ph 숨기기 (containerId 없이 직접)
+['galImg0','galImg1','galImg2','galImg3'].forEach(function(id, i) {
+  var img = document.getElementById(id);
+  if (img && img.src && img.src !== window.location.href) {
+    var ph = img.parentElement.querySelector('.gal-ph');
+    if (ph) ph.style.display = 'none';
+  }
+});
+
+/* ── 갤러리 무한 슬라이더 ── */
+(function(){
+  var track = document.getElementById('galTrack');
+  var prevBtn = document.getElementById('galPrev');
+  var nextBtn = document.getElementById('galNext');
+  var dots = document.querySelectorAll('.gal-dot');
+  var TOTAL = 4, GAP = 20, cur = 0, autoTimer = null;
+
+  // clone 생성
+  var orig = Array.from(track.children);
+  orig.forEach(function(el){ track.appendChild(el.cloneNode(true)); });
+  orig.slice().reverse().forEach(function(el){ track.prepend(el.cloneNode(true)); });
+
+  function iW(){ var items=track.querySelectorAll('.gal-item'); return items.length ? items[0].getBoundingClientRect().width+GAP : 320; }
+
+  function moveTo(idx, anim){
+    var pos=(TOTAL+idx)*iW();
+    track.style.transition=anim?'transform .55s cubic-bezier(.4,0,.2,1)':'none';
+    track.style.transform='translateX(-'+pos+'px)';
+  }
+  function updateDots(){
+    var d=((cur%TOTAL)+TOTAL)%TOTAL;
+    dots.forEach(function(dot,i){ dot.classList.toggle('active',i===d); });
+  }
+
+  window.addEventListener('load',function(){ moveTo(cur,false); });
+  setTimeout(function(){ moveTo(cur,false); },100);
+
+  track.addEventListener('transitionend',function(){
+    if(cur>=TOTAL){ cur-=TOTAL; moveTo(cur,false); }
+    else if(cur<0){ cur+=TOTAL; moveTo(cur,false); }
+    updateDots();
+  });
+
+  function goNext(){ cur++; moveTo(cur,true); updateDots(); }
+  function goPrev(){ cur--; moveTo(cur,true); updateDots(); }
+
+  nextBtn.addEventListener('click',function(){ goNext(); resetAuto(); });
+  prevBtn.addEventListener('click',function(){ goPrev(); resetAuto(); });
+  dots.forEach(function(dot){
+    dot.addEventListener('click',function(){
+      cur=parseInt(dot.dataset.dot); moveTo(cur,true); updateDots(); resetAuto();
+    });
+  });
+
+  function startAuto(){ autoTimer=setInterval(goNext,3200); }
+  function resetAuto(){ clearInterval(autoTimer); startAuto(); }
+  startAuto();
+  window.addEventListener('resize',function(){ moveTo(cur,false); });
+
+  // 갤러리 아이템 클릭 → 모달 (modal은 이미 위에서 선언됨)
+  var modal2=document.getElementById('modal');
+  var mia2=document.getElementById('modalImgArea');
+  var galSrcs2=[IMAGES.gallery1,IMAGES.gallery2,IMAGES.gallery3,IMAGES.gallery4];
+  track.addEventListener('click',function(e){
+    var item=e.target.closest('.gal-item');
+    if(!item) return;
+    var idx=((parseInt(item.dataset.index)%TOTAL)+TOTAL)%TOTAL;
+    var src=galSrcs2[idx];
+    if(src){
+      mia2.style.background='#051A59';
+      mia2.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:contain;">';
+    } else {
+      mia2.style.background='linear-gradient(135deg,#071B8C,#0d5fa0)';
+      mia2.innerHTML='<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:16px;padding:20px;">Gallery '+(idx+1)+'<br><small>이미지를 추가하세요</small></div>';
+    }
+    modal2.classList.add('open');
+  });
+
+  // 터치 스와이프
+  var tx2=0;
+  track.addEventListener('touchstart',function(e){ tx2=e.touches[0].clientX; },{passive:true});
+  track.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx2;
+    if(Math.abs(dx)>50){ dx<0?goNext():goPrev(); resetAuto(); }
+  },{passive:true});
+})();
+var revObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting) e.target.classList.add('visible');});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+
+document.querySelectorAll('.reveal').forEach(function(el){revObs.observe(el);});
+document.querySelectorAll('.char-card').forEach(function(el){revObs.observe(el);});
+document.querySelectorAll('.intro-card').forEach(function(el){revObs.observe(el);});
+
+/* ── 섹션 타이틀 클립 IntersectionObserver ── */
+var titleObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting) e.target.classList.add('in-view');
+  });
+},{threshold:0.2});
+document.querySelectorAll('.title-clip-wrap').forEach(function(el){titleObs.observe(el);});
+
+/* ── 히어로 파티클 캔버스 ── */
+(function(){
+  var canvas=document.getElementById('heroCanvas');
+  if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var pts=[], W, H;
+
+  function resize(){
+    W=canvas.width=canvas.offsetWidth;
+    H=canvas.height=canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
+
+  for(var i=0;i<80;i++){
+    pts.push({
+      x:Math.random()*1920, y:Math.random()*1080,
+      vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+      r:Math.random()*1.6+.3,
+      a:Math.random()*.45+.08
+    });
+  }
+
+  var mx=-999, my=-999;
+  var heroEl=document.getElementById('hero');
+  heroEl.addEventListener('mousemove',function(e){
+    var r=canvas.getBoundingClientRect();
+    mx=e.clientX-r.left; my=e.clientY-r.top;
+  },{passive:true});
+  heroEl.addEventListener('mouseleave',function(){mx=-999;my=-999;});
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){
+      var dx=p.x-mx, dy=p.y-my, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<130){ p.x+=dx/d*.5; p.y+=dy/d*.5; }
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(155,218,242,'+p.a+')';
+      ctx.fill();
+    });
+    // 연결선
+    for(var i=0;i<pts.length;i++){
+      for(var j=i+1;j<pts.length;j++){
+        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<90){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle='rgba(155,218,242,'+(0.07*(1-d/90))+')';
+          ctx.lineWidth=.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ── 마우스 패럴랙스 (히어로 섹션) ── */
+var hero=document.getElementById('hero');
+var glow=hero.querySelector('.hero-glow');
+hero.addEventListener('mousemove',function(e){
+  var rect=hero.getBoundingClientRect();
+  var cx=e.clientX-rect.left-rect.width/2;
+  var cy=e.clientY-rect.top-rect.height/2;
+  glow.style.transform='translate(calc(-50% + '+cx*.08+'px), calc(-60% + '+cy*.08+'px))';
+  hero.querySelectorAll('.bubble').forEach(function(b,i){
+    var f=0.015*(i+1);
+    b.style.transform='translate('+cx*f+'px,'+cy*f+'px)';
+  });
+},{passive:true});
+
+/* ── 챗봇 갤러리 이미지 주입 ── */
+(function(){
+  var cbImgs=[
+    {id:'cbImg0',src:IMAGES.chatbot1},
+    {id:'cbImg1',src:IMAGES.chatbot2},
+    {id:'cbImg2',src:IMAGES.chatbot3},
+    {id:'cbImg3',src:IMAGES.chatbot4},
+    {id:'cbImg4',src:IMAGES.chatbot5},
+    {id:'cbImg5',src:IMAGES.chatbot6},
+  ];
+  cbImgs.forEach(function(d){
+    var img=document.getElementById(d.id);
+    if(!img||!d.src) return;
+    img.src=d.src;
+    img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;z-index:1;';
+    img.onload=function(){
+      var ph=img.parentElement.querySelector('.cb-card-ph');
+      if(ph) ph.style.display='none';
+    };
+  });
+})();
+
+/* ── 챗봇 슬라이더 ── */
+(function(){
+  var track=document.getElementById('cbTrack');
+  var prevBtn=document.getElementById('cbPrev');
+  var nextBtn=document.getElementById('cbNext');
+  var dots=document.querySelectorAll('.cb-dot');
+  var TOTAL=6;
+  var GAP=24;
+  var cur=0;
+  var autoTimer=null;
+
+  /* 원본 clone — 무한루프 */
+  var orig=Array.from(track.children);
+  orig.forEach(function(el){ track.appendChild(el.cloneNode(true)); });
+  orig.slice().reverse().forEach(function(el){ track.prepend(el.cloneNode(true)); });
+
+  function iW(){
+    var items=track.querySelectorAll('.cb-card');
+    return items.length ? items[0].getBoundingClientRect().width+GAP : 200;
+  }
+
+  function moveTo(idx,anim){
+    var pos=(TOTAL+idx)*iW();
+    track.style.transition=anim?'transform .55s cubic-bezier(.4,0,.2,1)':'none';
+    track.style.transform='translateX(-'+pos+'px)';
+  }
+
+  function updateDots(){
+    var d=((cur%TOTAL)+TOTAL)%TOTAL;
+    dots.forEach(function(dot,i){ dot.classList.toggle('active',i===d); });
+  }
+
+  window.addEventListener('load',function(){ moveTo(cur,false); });
+  setTimeout(function(){ moveTo(cur,false); },120);
+
+  track.addEventListener('transitionend',function(){
+    if(cur>=TOTAL){ cur-=TOTAL; moveTo(cur,false); }
+    else if(cur<0){ cur+=TOTAL; moveTo(cur,false); }
+    updateDots();
+  });
+
+  function goNext(){ cur++; moveTo(cur,true); updateDots(); }
+  function goPrev(){ cur--; moveTo(cur,true); updateDots(); }
+
+  nextBtn.addEventListener('click',function(){ goNext(); resetAuto(); });
+  prevBtn.addEventListener('click',function(){ goPrev(); resetAuto(); });
+  dots.forEach(function(dot){
+    dot.addEventListener('click',function(){
+      cur=parseInt(dot.dataset.cbDot);
+      moveTo(cur,true); updateDots(); resetAuto();
+    });
+  });
+
+  function startAuto(){ autoTimer=setInterval(goNext,3000); }
+  function resetAuto(){ clearInterval(autoTimer); startAuto(); }
+  startAuto();
+  window.addEventListener('resize',function(){ moveTo(cur,false); });
+
+  /* 터치 스와이프 */
+  var tx=0;
+  track.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; },{passive:true});
+  track.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40){ dx<0?goNext():goPrev(); resetAuto(); }
+  },{passive:true});
+
+  /* 챗봇 모달 */
+  var cbModal=document.getElementById('cbModal');
+  var cbModalInner=document.getElementById('cbModalInner');
+  var cbModalClose=document.getElementById('cbModalClose');
+
+  var cbSrcs=[IMAGES.chatbot1,IMAGES.chatbot2,IMAGES.chatbot3,
+              IMAGES.chatbot4,IMAGES.chatbot5,IMAGES.chatbot6];
+
+  track.addEventListener('click',function(e){
+    var card=e.target.closest('.cb-card');
+    if(!card) return;
+    var idx=((parseInt(card.dataset.cb)%TOTAL)+TOTAL)%TOTAL;
+    var src=cbSrcs[idx];
+    cbModalInner.innerHTML=src
+      ? '<img src="'+src+'" style="width:100%;height:100%;object-fit:cover;object-position:top;">'
+      : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:rgba(255,255,255,0.3);font-size:13px;">이미지를 추가하세요</div>';
+    cbModal.classList.add('open');
+  });
+
+  cbModalClose.addEventListener('click',function(){ cbModal.classList.remove('open'); });
+  cbModal.addEventListener('click',function(e){ if(e.target===cbModal) cbModal.classList.remove('open'); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') cbModal.classList.remove('open'); });
+
+  /* title-clip-wrap observer에 cb-title-wrap도 추가 */
+  var cbTitleObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in-view'); });
+  },{threshold:0.2});
+  document.querySelectorAll('.cb-title-wrap').forEach(function(el){ cbTitleObs.observe(el); });
+})();
+</script>
+</body>
+</html>
