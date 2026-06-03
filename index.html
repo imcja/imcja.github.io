@@ -8,6 +8,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 
 <script>
+/* ══════════════════════════════════════════════
+   이미지 파일 목록 (index.html과 같은 폴더에 넣으세요)
+   ─────────────────────────────────────────────
+   logo.png        → 히어로 섹션 대형 타이포 로고
+   header-logo.png → 좌상단 헤더 원형/브랜드 로고
+   fs1~4.png       → 풀스크린 슬라이더 배경
+   main.png        → 메인 단체 이미지
+   char1~4.png     → 캐릭터 스탠딩 이미지
+   gallery1~4.png  → 갤러리 슬라이더
+   chatbot1~6.png  → 챗봇 적용안 갤러리
+══════════════════════════════════════════════ */
 var IMAGES = {
   /* ── 맨 상단 풀스크린 슬라이더 (별도 이미지) ── */
   fs1: 'fs1.png',
@@ -134,12 +145,8 @@ header.hidden{transform:translateY(-100%);}
 .fs-slide:nth-child(3){background:linear-gradient(135deg,#042a6e,#0874b8,#9BDAF2);}
 .fs-slide:nth-child(4){background:linear-gradient(135deg,#051A59,#065080,#3db5eb);}
 
-.fs-ph{
-  position:absolute;inset:0;z-index:2;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;color:rgba(255,255,255,0.15);font-size:13px;text-align:center;
-}
-.fs-ph small{font-family:'Montserrat',monospace;font-size:10px;color:rgba(255,255,255,0.1);letter-spacing:1px;}
+.fs-ph{ display:none!important; }
+.fs-ph small{ display:none!important; }
 
 /* text overlay */
 .fs-text{
@@ -266,7 +273,7 @@ header.hidden{transform:translateY(-100%);}
   font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
   letter-spacing:6px;text-transform:uppercase;color:var(--sky2);
   margin-bottom:24px;
-  opacity:0;animation:wordUp .9s .2s var(--ease) forwards;
+  opacity:0;animation:wordUp .9s 1.3s var(--ease) forwards;
 }
 .hero-title-wrap{overflow:hidden;margin-bottom:16px;}
 .hero-title{
@@ -277,7 +284,7 @@ header.hidden{transform:translateY(-100%);}
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   text-shadow:none;
   transform:translateY(110%);
-  animation:titleSlide 1.1s .3s var(--ease) forwards;
+  animation:titleSlide 1.1s .8s var(--ease) forwards;
 }
 @keyframes titleSlide{to{transform:translateY(0);}}
 .hero-title.line2{animation-delay:.45s;}
@@ -285,7 +292,7 @@ header.hidden{transform:translateY(-100%);}
 .hero-sub{
   font-size:clamp(15px,1.8vw,20px);font-weight:300;letter-spacing:.5px;
   color:rgba(255,255,255,0.7);text-align:center;margin-bottom:52px;
-  opacity:0;animation:wordUp .9s .7s var(--ease) forwards;
+  opacity:0;animation:wordUp .9s 1.1s var(--ease) forwards;
 }
 @keyframes wordUp{
   from{opacity:0;transform:translateY(20px);}
@@ -300,7 +307,7 @@ header.hidden{transform:translateY(-100%);}
   font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
   letter-spacing:3px;text-transform:uppercase;color:#fff;
   text-decoration:none;cursor:pointer;
-  opacity:0;animation:wordUp .9s .9s var(--ease) forwards;
+  opacity:0;animation:wordUp .9s 1.3s var(--ease) forwards;
   transition:background .35s,border-color .35s,transform .35s var(--ease);
 }
 .hero-cta:hover{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.5);transform:translateY(-3px);}
@@ -451,12 +458,8 @@ header.hidden{transform:translateY(-100%);}
   letter-spacing:2px;text-transform:uppercase;color:#fff;
   backdrop-filter:blur(8px);
 }
-.char-ph{
-  position:absolute;inset:0;z-index:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;color:rgba(255,255,255,0.18);font-size:11px;text-align:center;
-}
-.char-ph small{font-family:'Montserrat',monospace;font-size:9px;color:rgba(255,255,255,0.12);letter-spacing:1px;}
+.char-ph{ display:none!important; }
+.char-ph small{ display:none!important; }
 .char-info{padding:18px 20px 0;}
 .char-name{
   font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;
@@ -736,15 +739,8 @@ header.hidden{transform:translateY(-100%);}
   object-fit:cover;object-position:top center;
   display:block;z-index:1;
 }
-.cb-card-ph{
-  position:absolute;inset:0;z-index:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;color:rgba(255,255,255,0.2);font-size:11px;text-align:center;
-}
-.cb-card-ph small{
-  font-family:'Montserrat',monospace;font-size:9px;
-  color:rgba(255,255,255,0.12);letter-spacing:1px;
-}
+.cb-card-ph{ display:none!important; }
+.cb-card-ph small{ display:none!important; }
 .cb-card-overlay{
   position:absolute;inset:0;z-index:3;
   background:linear-gradient(to top,rgba(5,26,89,0.85) 0%,transparent 50%);
@@ -879,6 +875,44 @@ footer::before{
   .intro-header{padding:80px 24px 50px;}
   .footer-top{flex-direction:column;gap:28px;}
 }
+
+/* ═══════ HERO LOGO ═══════ */
+.hero-logo-wrap {
+  position:relative;z-index:10;
+  margin-bottom:36px;
+  opacity:0;
+  transform:translateY(40px) scale(0.92);
+  animation:logoHeroIn 1.2s 0.1s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes logoHeroIn {
+  0%  { opacity:0; transform:translateY(40px) scale(0.92); filter:blur(8px); }
+  60% { opacity:1; filter:blur(0px); }
+  100%{ opacity:1; transform:translateY(0) scale(1); filter:blur(0px); }
+}
+.hero-logo-img {
+  width: clamp(280px, 52vw, 720px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 48px rgba(92,200,242,0.55)) drop-shadow(0 0 120px rgba(92,200,242,0.2));
+  animation: logoGlow 3.5s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  0%  { filter: drop-shadow(0 0 32px rgba(92,200,242,0.45)) drop-shadow(0 0 80px rgba(92,200,242,0.15)); }
+  100%{ filter: drop-shadow(0 0 64px rgba(155,218,242,0.75)) drop-shadow(0 0 160px rgba(92,200,242,0.35)); }
+}
+.hero-logo-line {
+  display:block;
+  width:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(155,218,242,0.6), transparent);
+  margin: 18px auto 0;
+  animation: logoLineExpand 1.4s 0.9s cubic-bezier(.16,1,.3,1) forwards;
+  border-radius:1px;
+}
+@keyframes logoLineExpand {
+  to { width: clamp(200px, 42vw, 580px); }
+}
+
 </style>
 </head>
 <body>
@@ -892,13 +926,13 @@ footer::before{
 
 <!-- ══ HEADER ══ -->
 <header id="hdr">
-  <svg class="logo-svg" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg" fill="white">
-    <circle cx="22" cy="22" r="18" fill="white" opacity="0.9"/>
-    <path d="M22 10 C28 10 34 16 34 22 C34 28 28 34 22 34" stroke="#071B8C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path d="M22 34 C16 34 10 28 10 22 C10 16 16 10 22 10" stroke="#C8102E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <text x="50" y="16" font-family="'Montserrat',sans-serif" font-size="9" font-weight="700" letter-spacing="3" fill="white" text-anchor="start">KOREAN AIR</text>
-    <text x="50" y="32" font-family="'Pretendard Variable',sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="start">대한항공</text>
-  </svg>
+  <div class="logo-wrap" style="display:flex;align-items:center;gap:12px;">
+    <img src="header-logo.png" alt="Korean Air Logo" style="height:38px;width:auto;filter:brightness(0) invert(1);" onerror="this.style.display='none'">
+    <div style="display:flex;flex-direction:column;line-height:1.2;">
+      <span style="font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.85);">KOREAN AIR</span>
+      <span style="font-family:'Pretendard Variable',sans-serif;font-size:14px;font-weight:700;color:#fff;">대한항공</span>
+    </div>
+  </div>
   <nav class="header-nav">
     <a href="#hero">소개</a>
     <a href="#characters">캐릭터</a>
@@ -912,8 +946,8 @@ footer::before{
 <section id="fsg">
 
   <div class="fs-slide active" id="s0">
-    <img id="fi0" src="" alt="" style="display:none;">
-    <div class="fs-ph" id="fp0"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 1<br><small>gallery1.png</small></span></div>
+    <img id="fi0" alt="" style="display:none;">
+    
     <div class="fs-text">
       <p class="fs-eyebrow">Korean Air · Universal Design Characters</p>
       <h2 class="fs-h">모두를 위한<br>하늘</h2>
@@ -922,8 +956,8 @@ footer::before{
   </div>
 
   <div class="fs-slide" id="s1">
-    <img id="fi1" src="" alt="" style="display:none;">
-    <div class="fs-ph" id="fp1"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 2<br><small>gallery2.png</small></span></div>
+    <img id="fi1" alt="" style="display:none;">
+    
     <div class="fs-text">
       <p class="fs-eyebrow">Character Line-up</p>
       <h2 class="fs-h">네 가지<br>이야기</h2>
@@ -932,8 +966,8 @@ footer::before{
   </div>
 
   <div class="fs-slide" id="s2">
-    <img id="fi2" src="" alt="" style="display:none;">
-    <div class="fs-ph" id="fp2"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 3<br><small>gallery3.png</small></span></div>
+    <img id="fi2" alt="" style="display:none;">
+    
     <div class="fs-text">
       <p class="fs-eyebrow">Universal Design</p>
       <h2 class="fs-h">직관적인<br>시각 언어</h2>
@@ -942,8 +976,8 @@ footer::before{
   </div>
 
   <div class="fs-slide" id="s3">
-    <img id="fi3" src="" alt="" style="display:none;">
-    <div class="fs-ph" id="fp3"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 4<br><small>gallery4.png</small></span></div>
+    <img id="fi3" alt="" style="display:none;">
+    
     <div class="fs-text">
       <p class="fs-eyebrow">Korean Air · ESG</p>
       <h2 class="fs-h">포용성으로<br>나아가다</h2>
@@ -995,14 +1029,10 @@ footer::before{
   <div class="bubble" style="width:38px;height:38px;right:22%;top:72%;animation-duration:11s;animation-delay:4s;"></div>
   <div class="bubble" style="width:75px;height:75px;left:48%;top:8%;animation-duration:15s;animation-delay:1.5s;"></div>
 
-  <p class="hero-eyebrow">Korean Air · Official Characters</p>
-  <div class="hero-title-wrap">
-    <span class="hero-title">MEET THE</span>
+  <div class="hero-logo-wrap">
+    <img class="hero-logo-img" src="logo.png" alt="대한항공 패밀리">
+    <span class="hero-logo-line"></span>
   </div>
-  <div class="hero-title-wrap">
-    <span class="hero-title line2">CREW</span>
-  </div>
-  <p class="hero-sub">모두를 위한 하늘, 대한항공 공식 캐릭터를 소개합니다</p>
   <a class="hero-cta" href="#characters">
     캐릭터 보기
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1020,8 +1050,8 @@ footer::before{
     <div class="char-card" id="cc1">
       <div class="char-img-area">
         <div class="char-badge">No.01</div>
-        <img id="imgChar1" src="" alt="에어로" style="display:none;">
-        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char1.png</small></span></div>
+        <img id="imgChar1" alt="에어로" style="display:none;">
+        
       </div>
       <div class="char-info">
         <p class="char-name">비상</p>
@@ -1033,8 +1063,8 @@ footer::before{
     <div class="char-card" id="cc2">
       <div class="char-img-area">
         <div class="char-badge">No.02</div>
-        <img id="imgChar2" src="" alt="스카이" style="display:none;">
-        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char2.png</small></span></div>
+        <img id="imgChar2" alt="스카이" style="display:none;">
+        
       </div>
       <div class="char-info">
         <p class="char-name">기류</p>
@@ -1046,8 +1076,8 @@ footer::before{
     <div class="char-card" id="cc3">
       <div class="char-img-area">
         <div class="char-badge">No.03</div>
-        <img id="imgChar3" src="" alt="클라우드" style="display:none;">
-        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char3.png</small></span></div>
+        <img id="imgChar3" alt="클라우드" style="display:none;">
+        
       </div>
       <div class="char-info">
         <p class="char-name">누리</p>
@@ -1059,8 +1089,8 @@ footer::before{
     <div class="char-card" id="cc4">
       <div class="char-img-area">
         <div class="char-badge">No.04</div>
-        <img id="imgChar4" src="" alt="루미" style="display:none;">
-        <div class="char-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>이미지<br><small>char4.png</small></span></div>
+        <img id="imgChar4" alt="루미" style="display:none;">
+        
       </div>
       <div class="char-info">
         <p class="char-name">가온</p>
@@ -1083,22 +1113,22 @@ footer::before{
   <div class="gal-wrap">
     <div class="gal-track" id="galTrack">
       <div class="gal-item" data-index="0">
-        <img id="galImg0" src="" alt="Gallery 1" style="display:none;">
+        <img id="galImg0" alt="Gallery 1" style="display:none;">
         <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 1<br><small>gallery1.png</small></span></div>
         <div class="gal-overlay"><span>크게 보기</span></div>
       </div>
       <div class="gal-item" data-index="1">
-        <img id="galImg1" src="" alt="Gallery 2" style="display:none;">
+        <img id="galImg1" alt="Gallery 2" style="display:none;">
         <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 2<br><small>gallery2.png</small></span></div>
         <div class="gal-overlay"><span>크게 보기</span></div>
       </div>
       <div class="gal-item" data-index="2">
-        <img id="galImg2" src="" alt="Gallery 3" style="display:none;">
+        <img id="galImg2" alt="Gallery 3" style="display:none;">
         <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 3<br><small>gallery3.png</small></span></div>
         <div class="gal-overlay"><span>크게 보기</span></div>
       </div>
       <div class="gal-item" data-index="3">
-        <img id="galImg3" src="" alt="Gallery 4" style="display:none;">
+        <img id="galImg3" alt="Gallery 4" style="display:none;">
         <div class="gal-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Gallery 4<br><small>gallery4.png</small></span></div>
         <div class="gal-overlay"><span>크게 보기</span></div>
       </div>
@@ -1128,38 +1158,38 @@ footer::before{
     <div class="cb-track" id="cbTrack">
       <div class="cb-card" data-cb="0">
         <div class="cb-card-num">01</div>
-        <img id="cbImg0" src="" alt="챗봇 적용안 1" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot1.png</span></div>
+        <img id="cbImg0" alt="챗봇 적용안 1" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
       <div class="cb-card" data-cb="1">
         <div class="cb-card-num">02</div>
-        <img id="cbImg1" src="" alt="챗봇 적용안 2" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot2.png</span></div>
+        <img id="cbImg1" alt="챗봇 적용안 2" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
       <div class="cb-card" data-cb="2">
         <div class="cb-card-num">03</div>
-        <img id="cbImg2" src="" alt="챗봇 적용안 3" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot3.png</span></div>
+        <img id="cbImg2" alt="챗봇 적용안 3" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
       <div class="cb-card" data-cb="3">
         <div class="cb-card-num">04</div>
-        <img id="cbImg3" src="" alt="챗봇 적용안 4" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot4.png</span></div>
+        <img id="cbImg3" alt="챗봇 적용안 4" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
       <div class="cb-card" data-cb="4">
         <div class="cb-card-num">05</div>
-        <img id="cbImg4" src="" alt="챗봇 적용안 5" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot5.png</span></div>
+        <img id="cbImg4" alt="챗봇 적용안 5" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
       <div class="cb-card" data-cb="5">
         <div class="cb-card-num">06</div>
-        <img id="cbImg5" src="" alt="챗봇 적용안 6" style="display:none;">
-        <div class="cb-card-ph"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>chatbot6.png</span></div>
+        <img id="cbImg5" alt="챗봇 적용안 6" style="display:none;">
+        
         <div class="cb-card-overlay"><span>크게 보기</span></div>
       </div>
     </div>
